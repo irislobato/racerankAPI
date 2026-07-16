@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @Entity
+@Table(name = "RegistroDaVolta")
 public class RegistroDaVolta {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
