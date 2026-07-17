@@ -16,5 +16,5 @@ public class Pista {
     private Long pista_id;
     private String nome;
     private String localizacao;
-    private double extensao_metros;
+    private double extensaoMetros;
 }

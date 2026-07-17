@@ -8,4 +8,5 @@ import lombok.NoArgsConstructor;
 public class PistaDto {
     private String nome;
     private String localizacao;
+    private double extensaoMetros;
 }

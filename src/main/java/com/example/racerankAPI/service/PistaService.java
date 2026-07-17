@@ -1,13 +1,15 @@
 package com.example.racerankAPI.service;
 
+import com.example.racerankAPI.dto.PistaDto;
 import com.example.racerankAPI.model.Pista;
 import com.example.racerankAPI.repository.PistaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class PistaService {
+public class  PistaService {
 
     private final PistaRepository pistaRepository;
 
@@ -15,8 +17,14 @@ public class PistaService {
         this.pistaRepository = pistaRepository;
     }
 
-    public Pista adicionarPista(Pista pista) {
-        return pistaRepository.save(pista);
+    public Pista adicionarPista(PistaDto dto) {
+        Pista novaPista = new Pista();
+
+        novaPista.setNome(dto.getNome().trim().toUpperCase());
+        novaPista.setLocalizacao(dto.getLocalizacao().trim().toUpperCase());
+        novaPista.setExtensaoMetros(dto.getExtensaoMetros());
+
+        return pistaRepository.save(novaPista);
     }
 
     public List<Pista> listarPistas() {
