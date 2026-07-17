@@ -38,4 +38,3 @@ public class RegistroDaVoltaService {
         registroDaVoltaRepository.deleteById(id);
     }
 }
-```
