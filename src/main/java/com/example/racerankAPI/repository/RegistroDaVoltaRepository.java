@@ -9,8 +9,8 @@ import java.util.List;
 public interface RegistroDaVoltaRepository extends JpaRepository<RegistroDaVolta, Long> {
 
     //Buscar todas as voltas de um piloto em específico
-    List<RegistroDaVolta> findByPilotoId(Long pilotoId);
+    List<RegistroDaVolta> findByPilotoId(Long piloto_id);
 
-    //Busca a lista dos tempos das corridas em determinada pista da menor para a maior
-    List<RegistroDaVolta> findByPistaIdOrderByTempoMilissegundosAsc(Long pistaId);
+    //Busca a lista dos tempos das corridas em determinada pista da menor para a _maior
+    List<RegistroDaVolta> findByPistaIdOrderByTempoMilissegundosAsc(Long pista_id);
 }

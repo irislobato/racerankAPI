@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class Pista {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long pista_id;
+    private Long id;
     private String nome;
     private String localizacao;
     private double extensaoMetros;

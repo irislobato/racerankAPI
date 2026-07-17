@@ -24,8 +24,8 @@ public class RegistroDaVolta {
     private Pista pista;
 
     @Column(name = "tempo_milissegundos")
-    private Long tempo_milissegundos;
+    private Long tempoMilissegundos;
 
     @Column(name = "data_volta")
-    private LocalDateTime data_volta;
+    private LocalDateTime dataVolta;
 }

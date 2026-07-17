@@ -2,11 +2,14 @@ package com.example.racerankAPI.service;
 
 import com.example.racerankAPI.dto.PilotoDto;
 import com.example.racerankAPI.exception.ArgumentoInvalidoException;
+import com.example.racerankAPI.exception.ConflitoDeRecursoException;
 import com.example.racerankAPI.exception.RecursoNaoEncontradoException;
 import com.example.racerankAPI.model.Piloto;
 import com.example.racerankAPI.repository.PilotoRepository;
 import com.example.racerankAPI.repository.RegistroDaVoltaRepository;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -22,16 +25,18 @@ public class PilotoService {
 
     // ======================= CREATE =========================
     public Piloto adicionarPiloto(PilotoDto dto) {
-        if (dto.getNome() == null || dto.getNome().isEmpty()) {
+        if (dto.getNome() == null || dto.getNome().trim().isEmpty()) {
             throw new ArgumentoInvalidoException("O campo do nome do piloto deve ser preenchido.");
         }
-        if (dto.getEquipe() == null || dto.getNome().isEmpty()) {
+        if (dto.getEquipe() == null || dto.getNome().trim().isEmpty()) {
             throw new ArgumentoInvalidoException("O campo do equipe do piloto deve ser preenchido.");
         }
+
         Piloto novoPiloto = new Piloto();
 
-        novoPiloto.setNome(dto.getNome());
-        novoPiloto.setEquipe(dto.getEquipe());
+        novoPiloto.setNome(dto.getNome().trim().toUpperCase());
+        novoPiloto.setEquipe(dto.getEquipe().trim().toUpperCase());
+        novoPiloto.setDataCadastro(LocalDateTime.now());
 
         return pilotoRepository.save(novoPiloto);
     }
@@ -55,13 +60,18 @@ public class PilotoService {
             throw new ArgumentoInvalidoException("O campo do equipe do piloto deve ser preenchido.");
         }
 
-        pilotoBuscado.setNome(dto.getNome());
-        pilotoBuscado.setEquipe(dto.getEquipe());
+        pilotoBuscado.setNome(dto.getNome().trim().toUpperCase());
+        pilotoBuscado.setEquipe(dto.getEquipe().trim().toUpperCase());
 
         return pilotoRepository.save(pilotoBuscado);
     }
     // ========================== DELETE ===========================
     public void deletarPiloto(Long id){
-        pilotoRepository.deleteById(id);
+        Piloto piloto = buscarPilotoPorId(id);
+
+        if (!registroDaVoltaRepository.findByPilotoId(id).isEmpty()) {
+        throw new ConflitoDeRecursoException("Não é possível excluir o piloto. Ele possui tempos de volta registrados no histórico.");
+    }
+        pilotoRepository.delete(piloto);
     }
 }

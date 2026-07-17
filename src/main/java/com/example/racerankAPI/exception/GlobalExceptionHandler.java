@@ -46,11 +46,11 @@ public class GlobalExceptionHandler {
     }
 
     //Erro o qual engloba quaisquer erros não descritos anteriormente
-    @ExceptionHandler(Exception.class)
-    public ProblemDetail handleErroGenerico(Exception exception){
-        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus., "Ocorreu uma falha imprevista no servidor, por favor contate o suporte.");
-        problem.setTitle("Erro Interno do Servidor.");
-
-        return problem;
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ProblemDetail handleErroGenerico(Exception exception){
+//        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, "Ocorreu uma falha imprevista no servidor, por favor contate o suporte.");
+//        problem.setTitle("Erro Interno do Servidor.");
+//
+//        return problem;
+//    }
 }

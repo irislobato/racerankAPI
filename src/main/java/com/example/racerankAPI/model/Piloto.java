@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 public class Piloto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long piloto_id;
+    private Long id;
     private String nome;
     private String equipe;
-    private LocalDateTime data_cadastro;
+    private LocalDateTime dataCadastro;
 }
