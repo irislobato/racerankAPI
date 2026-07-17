@@ -23,9 +23,9 @@ public class RegistroDaVolta {
     @JoinColumn(name = "pista_id", nullable = false)
     private Pista pista;
 
-    @JoinColumn(name = "tempo_milissegundos")
+    @Column(name = "tempo_milissegundos")
     private Long tempo_milissegundos;
 
-    @JoinColumn(name = "data_volta")
+    @Column(name = "data_volta")
     private LocalDateTime data_volta;
 }
