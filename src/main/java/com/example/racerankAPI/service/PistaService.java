@@ -2,11 +2,13 @@ package com.example.racerankAPI.service;
 
 import com.example.racerankAPI.dto.PistaDto;
 import com.example.racerankAPI.exception.ArgumentoInvalidoException;
+import com.example.racerankAPI.exception.RecursoNaoEncontradoException;
 import com.example.racerankAPI.model.Pista;
 import com.example.racerankAPI.repository.PistaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class  PistaService {
@@ -41,27 +43,42 @@ public class  PistaService {
         return pistaRepository.save(novaPista);
     }
 
+    //Read all
     public List<Pista> listarPistas() {
         return pistaRepository.findAll();
     }
 
+    //Read by ID
     public Pista buscarPistaPorId(Long id) {
-        return pistaRepository.findById(id).orElse(null);
+        return pistaRepository.findById(id).orElseThrow(()-> new RecursoNaoEncontradoException("A pista com id " + id + " não foi encontrada."));
     }
 
-    public Pista atualizarPista(Long id, PistaDto pistaAtualizada) {
+    //Update
+    public Pista uptadeAndCreatePista(Long id, Pista pistaAtualizada) {
+        Optional<Pista> pistaBuscando = pistaRepository.findById(id);
 
-        Pista pista = buscarPistaPorId(id);
 
-        if (pista == null) {
-            return null;
+        //Se a pista com o ID fornecido não existir, throw error
+        if(pistaBuscando.isEmpty()){
+            throw new RecursoNaoEncontradoException("A pista com id " + id + " não foi encontrada.");
         }
 
-        pista.setNome(pistaAtualizada.getNome());
-        pista.setLocalizacao(pistaAtualizada.getLocalizacao());
-        pista.setExtensaoMetros(pistaAtualizada.getExtensaoMetros());
+        Pista pistaExistente = pistaBuscando.get();
 
-        return pistaRepository.save(pista);
+        //Atualização parcial dos campos
+        if(pistaAtualizada.getNome() != null && !pistaAtualizada.getNome().trim().isEmpty()){
+            pistaExistente.setNome(pistaAtualizada.getNome().toUpperCase().trim());
+        }
+
+        if(pistaAtualizada.getLocalizacao() != null && !pistaAtualizada.getLocalizacao().trim().isEmpty()){
+            pistaExistente.setLocalizacao(pistaAtualizada.getLocalizacao().toUpperCase().trim());
+        }
+
+        if(pistaAtualizada.getExtensaoMetros() > 0){
+            pistaExistente.setExtensaoMetros(pistaAtualizada.getExtensaoMetros());
+        }
+
+        return pistaRepository.save(pistaExistente);
     }
 
 }
