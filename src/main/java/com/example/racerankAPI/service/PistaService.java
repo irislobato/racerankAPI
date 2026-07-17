@@ -1,9 +1,9 @@
 package com.example.racerankAPI.service;
 
 import com.example.racerankAPI.dto.PistaDto;
+import com.example.racerankAPI.exception.ArgumentoInvalidoException;
 import com.example.racerankAPI.model.Pista;
 import com.example.racerankAPI.repository.PistaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +17,20 @@ public class  PistaService {
         this.pistaRepository = pistaRepository;
     }
 
+    //Create
     public Pista adicionarPista(PistaDto dto) {
+
+        //Tratamento de erros
+        if(dto.getNome() == null || dto.getNome().isEmpty()){
+            throw new ArgumentoInvalidoException("O campo do nome deve ser preenchido!")
+        }
+        if(dto.getLocalizacao() == null || dto.getLocalizacao().isEmpty()){
+            throw new ArgumentoInvalidoException("O campo da localização deve ser preenchido")
+        }
+        if(dto.getExtensaoMetros() <= 0){
+            throw new ArgumentoInvalidoException("A extensão da pista deve ser maior do que 0 metros1")
+        }
+
         Pista novaPista = new Pista();
 
         novaPista.setNome(dto.getNome().trim().toUpperCase());
@@ -45,7 +58,7 @@ public class  PistaService {
 
         pista.setNome(pistaAtualizada.getNome());
         pista.setLocalizacao(pistaAtualizada.getLocalizacao());
-        pista.setExtensao_metros(pistaAtualizada.getExtensao_metros());
+        pista.setExtensaoMetros(pistaAtualizada.getExtensaoMetros());
 
         return pistaRepository.save(pista);
     }

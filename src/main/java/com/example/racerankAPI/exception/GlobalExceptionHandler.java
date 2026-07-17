@@ -36,10 +36,19 @@ public class GlobalExceptionHandler {
         return problem;
     }
 
+    //Erro de campo nulo
+    @ExceptionHandler(ArgumentoInvalidoException.class)
+    public ProblemDetail handleArgumentoInvalido(ArgumentoInvalidoException exception){
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, exception.getMessage());
+        problem.setTitle("Argumento iinválido.");
+
+        return problem;
+    }
+
     //Erro o qual engloba quaisquer erros não descritos anteriormente
     @ExceptionHandler(Exception.class)
     public ProblemDetail handleErroGenerico(Exception exception){
-        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, "Ocorreu uma falha imprevista no servidor, por favor contate o suporte.");
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus., "Ocorreu uma falha imprevista no servidor, por favor contate o suporte.");
         problem.setTitle("Erro Interno do Servidor.");
 
         return problem;
