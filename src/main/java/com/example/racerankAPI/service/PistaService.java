@@ -54,7 +54,7 @@ public class  PistaService {
     }
 
     //Update
-    public Pista uptadeAndCreatePista(Long id, Pista pistaAtualizada) {
+    public Pista updateAndCreatePista(Long id, PistaDto pistaAtualizada) {
         Optional<Pista> pistaBuscando = pistaRepository.findById(id);
 
 

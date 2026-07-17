@@ -37,6 +37,6 @@ public class PistaController {
 
     @PutMapping("/{id}")
     public Pista atualizarPista(@PathVariable Long id, @RequestBody PistaDto dto){
-        return pistaService.atualizarPista(id, dto);
+        return pistaService.updateAndCreatePista(id, dto);
     }
 }
