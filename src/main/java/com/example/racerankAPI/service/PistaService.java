@@ -22,13 +22,13 @@ public class  PistaService {
 
         //Tratamento de erros
         if(dto.getNome() == null || dto.getNome().isEmpty()){
-            throw new ArgumentoInvalidoException("O campo do nome deve ser preenchido!")
+            throw new ArgumentoInvalidoException("O campo do nome deve ser preenchido!");
         }
         if(dto.getLocalizacao() == null || dto.getLocalizacao().isEmpty()){
-            throw new ArgumentoInvalidoException("O campo da localização deve ser preenchido")
+            throw new ArgumentoInvalidoException("O campo da localização deve ser preenchido!");
         }
         if(dto.getExtensaoMetros() <= 0){
-            throw new ArgumentoInvalidoException("A extensão da pista deve ser maior do que 0 metros1")
+            throw new ArgumentoInvalidoException("A extensão da pista deve ser maior do que 0 metros!");
         }
 
         //Se passou pelo tratamento de erros, cria uma nova pista

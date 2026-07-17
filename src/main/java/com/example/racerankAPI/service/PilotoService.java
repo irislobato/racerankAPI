@@ -22,11 +22,12 @@ public class PilotoService {
 
     // ======================= CREATE =========================
     public Piloto adicionarPiloto(PilotoDto dto) {
-        if (dto.getNome() == null || dto.getNome().isEmpty())
+        if (dto.getNome() == null || dto.getNome().isEmpty()) {
             throw new ArgumentoInvalidoException("O campo do nome do piloto deve ser preenchido.");
-        if (dto.getEquipe() == null || dto.getNome().isEmpty())
+        }
+        if (dto.getEquipe() == null || dto.getNome().isEmpty()) {
             throw new ArgumentoInvalidoException("O campo do equipe do piloto deve ser preenchido.");
-
+        }
         Piloto novoPiloto = new Piloto();
 
         novoPiloto.setNome(dto.getNome());
@@ -47,10 +48,12 @@ public class PilotoService {
         Piloto pilotoBuscado = pilotoRepository.findById(id).
                 orElseThrow(() -> new RecursoNaoEncontradoException("O piloto de ID" + id + "não foi encontrado."));
 
-        if (dto.getNome() == null || dto.getNome().isEmpty())
+        if (dto.getNome() == null || dto.getNome().isEmpty()) {
             throw new ArgumentoInvalidoException("O campo do nome do piloto deve ser preenchido.");
-        if (dto.getEquipe() == null || dto.getNome().isEmpty())
+        }
+        if (dto.getEquipe() == null || dto.getNome().isEmpty()) {
             throw new ArgumentoInvalidoException("O campo do equipe do piloto deve ser preenchido.");
+        }
 
         pilotoBuscado.setNome(dto.getNome());
         pilotoBuscado.setEquipe(dto.getEquipe());
