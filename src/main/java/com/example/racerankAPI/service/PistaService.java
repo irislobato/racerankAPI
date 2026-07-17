@@ -31,6 +31,7 @@ public class  PistaService {
             throw new ArgumentoInvalidoException("A extensão da pista deve ser maior do que 0 metros1")
         }
 
+        //Se passou pelo tratamento de erros, cria uma nova pista
         Pista novaPista = new Pista();
 
         novaPista.setNome(dto.getNome().trim().toUpperCase());
