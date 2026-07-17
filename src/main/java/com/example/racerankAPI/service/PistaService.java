@@ -49,7 +49,7 @@ public class  PistaService {
         return pistaRepository.findById(id).orElse(null);
     }
 
-    public Pista atualizarPista(Long id, Pista pistaAtualizada) {
+    public Pista atualizarPista(Long id, PistaDto pistaAtualizada) {
 
         Pista pista = buscarPistaPorId(id);
 
