@@ -30,7 +30,7 @@ public class PilotoService {
         if (dto.getNome() == null || dto.getNome().trim().isEmpty()) {
             throw new ArgumentoInvalidoException("O campo do nome do piloto deve ser preenchido.");
         }
-        if (dto.getEquipe() == null || dto.getNome().trim().isEmpty()) {
+        if (dto.getEquipe() == null || dto.getEquipe().trim().isEmpty()) {
             throw new ArgumentoInvalidoException("O campo do equipe do piloto deve ser preenchido.");
         }
 
@@ -71,7 +71,7 @@ public class PilotoService {
         }
 
         if(pilotoAtualizado.getEquipe() != null && !pilotoAtualizado.getEquipe().trim().isEmpty()){
-            pilotoExistente.setNome(pilotoAtualizado.getEquipe().toUpperCase().trim());
+            pilotoExistente.setEquipe(pilotoAtualizado.getEquipe().toUpperCase().trim());
         }
 
         return pilotoRepository.save(pilotoExistente);
