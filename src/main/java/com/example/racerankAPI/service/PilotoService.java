@@ -5,12 +5,14 @@ import com.example.racerankAPI.exception.ArgumentoInvalidoException;
 import com.example.racerankAPI.exception.ConflitoDeRecursoException;
 import com.example.racerankAPI.exception.RecursoNaoEncontradoException;
 import com.example.racerankAPI.model.Piloto;
+import com.example.racerankAPI.model.Pista;
 import com.example.racerankAPI.repository.PilotoRepository;
 import com.example.racerankAPI.repository.RegistroDaVoltaRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -40,31 +42,41 @@ public class PilotoService {
 
         return pilotoRepository.save(novoPiloto);
     }
+
     // ========================= READ ============================
     public List<Piloto> buscarTodosPilotos(){
         return pilotoRepository.findAll();
     }
+
     public Piloto buscarPilotoPorId(Long id){
         return pilotoRepository.findById(id).
                 orElseThrow(() -> new RecursoNaoEncontradoException("O piloto de ID" + id + "não foi encontrado."));
     }
+
     // ========================== UPDATE ============================
-    public Piloto atualizarPiloto(Long id, PilotoDto dto){
-        Piloto pilotoBuscado = pilotoRepository.findById(id).
-                orElseThrow(() -> new RecursoNaoEncontradoException("O piloto de ID" + id + "não foi encontrado."));
+    public Piloto atualizarPiloto(Long id, PilotoDto pilotoAtualizado){
 
-        if (dto.getNome() == null || dto.getNome().isEmpty()) {
-            throw new ArgumentoInvalidoException("O campo do nome do piloto deve ser preenchido.");
-        }
-        if (dto.getEquipe() == null || dto.getNome().isEmpty()) {
-            throw new ArgumentoInvalidoException("O campo do equipe do piloto deve ser preenchido.");
+        Optional<Piloto> pilotoBuscando = pilotoRepository.findById(id);
+
+        //Se o piloto com ID fornecido não existir, throw error
+        if(pilotoBuscando.isEmpty()){
+            throw new RecursoNaoEncontradoException("O piloto com id " + id + " não foi encontrado");
         }
 
-        pilotoBuscado.setNome(dto.getNome().trim().toUpperCase());
-        pilotoBuscado.setEquipe(dto.getEquipe().trim().toUpperCase());
+        Piloto pilotoExistente = pilotoBuscando.get();
 
-        return pilotoRepository.save(pilotoBuscado);
+        //Atualização parcial dos campos
+        if(pilotoAtualizado.getNome() != null && !pilotoAtualizado.getNome().trim().isEmpty()){
+            pilotoExistente.setNome(pilotoAtualizado.getNome().toUpperCase().trim());
+        }
+
+        if(pilotoAtualizado.getEquipe() != null && !pilotoAtualizado.getEquipe().trim().isEmpty()){
+            pilotoExistente.setNome(pilotoAtualizado.getEquipe().toUpperCase().trim());
+        }
+
+        return pilotoRepository.save(pilotoExistente);
     }
+
     // ========================== DELETE ===========================
     public void deletarPiloto(Long id){
         Piloto piloto = buscarPilotoPorId(id);
