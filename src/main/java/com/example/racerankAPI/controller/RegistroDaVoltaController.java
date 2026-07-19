@@ -5,6 +5,7 @@ import com.example.racerankAPI.model.RegistroDaVolta;
 import com.example.racerankAPI.service.PilotoService;
 import com.example.racerankAPI.service.PistaService;
 import com.example.racerankAPI.service.RegistroDaVoltaService;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ public class RegistroDaVoltaController {
         this.pistaService = pistaService;
     }
 
+    @Transactional
     @PostMapping
     public ResponseEntity<RegistroDaVolta> registrarVolta(@RequestBody RegistroDaVoltaDto dto){
         RegistroDaVolta voltaRegistrada = registroDaVoltaService.registrarVolta(dto);
